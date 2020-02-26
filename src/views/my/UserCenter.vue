@@ -13,8 +13,8 @@
         </div>
         <div class="user-conten">
             <van-cell-group>
-                <!--<van-cell title="活动管理" is-link :to="{name: 'publicActivity'}"></van-cell>-->
-                <van-cell title="活动管理" is-link :to="{name: 'activityList'}"></van-cell>
+                <van-cell title="活动管理" is-link :to="{name: 'publicActivity'}"></van-cell>
+                <!--<van-cell title="活动管理" is-link :to="{name: 'activityList'}"></van-cell>-->
             </van-cell-group>
             <van-cell-group>
                 <van-cell title="消息管理" is-link></van-cell>

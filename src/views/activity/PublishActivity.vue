@@ -1,5 +1,7 @@
 <template>
     <div class="c-main">
+        <p>{{test}}==</p>
+        <p>{{test2}}==</p>
         <van-cell-group>
             <van-field
                 v-model="fm.name"
@@ -22,12 +24,12 @@
         <van-cell-group title="活动信息配置">
             <van-field
                 v-model="fm.num"
-                readonly
-                @touchstart.native.stop="vm.show = true"
-                arrow-direction="up"
+                type="number"
+                :formatter="onlyNumber"
                 label="预收人数"
                 placeholder="请输入">
             </van-field>
+            <!-- todo 自动计算活动天数 -->
             <van-field
                 v-model="fm.days"
                 type="number"
@@ -35,14 +37,14 @@
                 label="活动天数"
                 placeholder="请输入">
             </van-field>
-            <van-cell title="报名时间" is-link v-model="fm.startTime" @click="handleShowDatePopup">
+            <van-cell title="开始时间" is-link v-model="fm.startTime" @click="handleShowDatePopup">
                 <van-icon
                     slot="right-icon"
                     name="underway-o"
                     style="line-height: inherit;"
                 />
             </van-cell>
-            <van-cell title="截止时间" is-link v-model="fm.startTime" @click="handleShowDatePopup">
+            <van-cell title="结束时间" is-link v-model="fm.startTime" @click="handleShowDatePopup">
                 <van-icon
                     slot="right-icon"
                     name="underway-o"
@@ -87,14 +89,14 @@
             </van-col>
         </van-row>
         
-        <van-number-keyboard
-            v-model="fm.num"
-            :show="vm.show"
-            extra-key="."
-            close-button-text="完成"
-            @blur="vm.show = false"
-            @touchstart.native.stop="show = true"
-        />
+        <!--<van-number-keyboard-->
+            <!--v-model="fm.num"-->
+            <!--:show="vm.show"-->
+            <!--extra-key="."-->
+            <!--close-button-text="完成"-->
+            <!--@blur="vm.show = false"-->
+            <!--@touchstart.native.stop="show = true"-->
+        <!--/>-->
         <!--<van-cell title="注册角色" is-link :value="fm.role" @click="handleShowRoleList" required></van-cell>-->
         <!--<van-cell title="所在城市" is-link v-model="fm.city" @click="handleShowAreaPopup"></van-cell>-->
         <!--<van-action-sheet-->
@@ -104,25 +106,33 @@
             <!--@select="handleRoleSelect">-->
         <!--</van-action-sheet>-->
         <!-- 所在城市 开始 -->
-        <van-popup
-            v-model="vm.datePopupVisiable"
-            position="bottom"
-        >
-            <van-datetime-picker
-                type="datetime"
-                @confirm="handleSelectStartTime"
-            />
-        </van-popup>
+        <datetime-picker-popup v-model="test" @confirm="handleSelectStartTime"></datetime-picker-popup>
+        <!--<van-popup-->
+            <!--v-model="vm.datePopupVisiable"-->
+            <!--position="bottom"-->
+        <!--&gt;-->
+            <!--<van-datetime-picker-->
+                <!--type="datetime"-->
+                <!--@confirm="handleSelectStartTime"-->
+                <!--title="活动开始时间"-->
+                <!--:close-on-popstate="true"-->
+            <!--/>-->
+        <!--</van-popup>-->
         <!-- 所在城市 结束 -->
     </div>
 </template>
 
 <script>
+    import datetimePickerPopup from '../../components/datetimePickerPopup';
 	export default {
 		name: "PublishActivity",
+        components: {
+            datetimePickerPopup,
+        },
         data() {
             return {
-                test: null,
+                test: false,
+                test2: false,
                 fm: {
                     name:'',
                     detail:'',
@@ -137,13 +147,21 @@
             }
         },
         methods: {
+            // 过滤非数字
+            onlyNumber(value) {
+                return value.replace(/\D/g, '');
+            },
             handleShowDatePopup() {
-                this.vm.datePopupVisiable = true;
+                this.test = true;
+                // this.vm.datePopupVisiable = true;
+            },
+            handleTest(value) {
+                this.test2 = value;
             },
             handleSelectStartTime(val) {
-                this.fm.startTime = val.toLocaleString();
-                this.test = val.toLocaleString();
-                this.vm.datePopupVisiable = false;
+                console.log(new Date(val).getTime());
+                this.fm.startTime = new Date(val).toString();
+                // this.vm.datePopupVisiable = false;
             },
             handlePublish() {
                 this.$toast.success('发布成功!');
