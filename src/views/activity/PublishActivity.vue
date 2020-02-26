@@ -1,6 +1,6 @@
 <template>
     <div class="c-main">
-        <p>{{test}}==</p>
+        <p>{{fm}}==</p>
         <p>{{test2}}==</p>
         <van-cell-group>
             <van-field
@@ -37,21 +37,9 @@
                 label="活动天数"
                 placeholder="请输入">
             </van-field>
-            <van-cell title="开始时间" is-link v-model="fm.startTime" @click="handleShowDatePopup">
-                <van-icon
-                    slot="right-icon"
-                    name="underway-o"
-                    style="line-height: inherit;"
-                />
-            </van-cell>
-            <van-cell title="结束时间" is-link v-model="fm.startTime" @click="handleShowDatePopup">
-                <van-icon
-                    slot="right-icon"
-                    name="underway-o"
-                    style="line-height: inherit;"
-                />
-            </van-cell>
-            <van-cell title="活动领队" is-link></van-cell>
+        <datetime-picker-popup v-model="fm.startTime" lable="开始时间"></datetime-picker-popup>
+        <datetime-picker-popup v-model="fm.endTime" lable="开始时间"></datetime-picker-popup>
+        <van-cell title="活动领队" is-link></van-cell>
         </van-cell-group>
         <van-cell-group>
             <van-field
@@ -79,7 +67,7 @@
                 placeholder="请输入">
             </van-field>
         </van-cell-group>
-    
+
         <van-row class="mr">
             <van-col span="10" offset="1">
                 <van-button type="default" plain size="large">存草稿</van-button>
@@ -88,7 +76,7 @@
                 <van-button type="info" size="large" @click="handlePublish">发布</van-button>
             </van-col>
         </van-row>
-        
+
         <!--<van-number-keyboard-->
             <!--v-model="fm.num"-->
             <!--:show="vm.show"-->
@@ -106,7 +94,7 @@
             <!--@select="handleRoleSelect">-->
         <!--</van-action-sheet>-->
         <!-- 所在城市 开始 -->
-        <datetime-picker-popup v-model="test" @confirm="handleSelectStartTime"></datetime-picker-popup>
+        <!--<datetime-picker-popup v-model="test" @confirm="handleSelectStartTime"></datetime-picker-popup>-->
         <!--<van-popup-->
             <!--v-model="vm.datePopupVisiable"-->
             <!--position="bottom"-->

@@ -36,9 +36,9 @@
             </van-cell-group>
         </div>
         <van-tabbar v-model="tabActive">
-            <van-tabbar-item icon="home-o">消息</van-tabbar-item>
-            <van-tabbar-item icon="search">活动</van-tabbar-item>
-            <van-tabbar-item icon="friends-o">我的</van-tabbar-item>
+            <van-tabbar-item icon="home-o" to="/">消息</van-tabbar-item>
+            <van-tabbar-item icon="search" to="/activity/activityList">活动</van-tabbar-item>
+            <van-tabbar-item icon="friends-o" to="/my/userCenter">我的</van-tabbar-item>
         </van-tabbar>
     </div>
 </template>
@@ -57,7 +57,7 @@
 <style scoped>
 .user-center {
     font-size: 14px;
-    
+
 }
 .user-info {
     padding: 20px;

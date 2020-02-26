@@ -1,28 +1,59 @@
 <template>
   <div>
-    <p>我是父亲,对儿子说： {{sth}}</p>
-    <child v-model="sth"></child>
+    <van-cell title="title"
+              is-link
+              v-model="fm.startTime"
+              @click="handleShowDatePopup">
+      <van-icon
+        slot="right-icon"
+        name="underway-o"
+        style="line-height: inherit;"
+      />
+    </van-cell>
+    <van-popup
+      v-model="value"
+      position="bottom"
+    >
+      <van-datetime-picker
+        type="datetime"
+        @confirm="confirm"
+        :title="title"
+        :close-on-popstate="true"
+      />
+    </van-popup>
   </div>
 </template>
 
 <script>
-  import child from './child';
 	export default {
-		name: "parent",
-    components: {
-      child,
-    },
-		data() {
-			return {
-				sth: '给你100块钱',
+		name: "datetimePickerPopup",
+		props: {
+			value: {
+				type: Boolean,
+				default: false,
+			},
+			title: {
+				type: String,
+				default: '选择时间',
 			}
 		},
-    methods: {
-      handleBack(value) {
-        this.sth = value;
-      }
-    }
-  
+		// model: {
+		// 	prop: 'value',
+		// 	event: 'returnBack'
+		// },
+		data() {
+			return {
+				visiable: false,
+			}
+		},
+		methods: {
+			confirm(value) {
+				this.$emit('input', false);
+				this.$emit('confirm', value);
+			},
+		},
+		created() {
+		}
 	}
 </script>
 
