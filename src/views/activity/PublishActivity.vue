@@ -1,7 +1,5 @@
 <template>
     <div class="c-main">
-        <p>{{fm}}==</p>
-        <p>{{test2}}==</p>
         <van-cell-group>
             <van-field
                 v-model="fm.name"
@@ -38,22 +36,42 @@
                 placeholder="请输入">
             </van-field>
         <datetime-picker-popup v-model="fm.startTime" lable="开始时间"></datetime-picker-popup>
-        <datetime-picker-popup v-model="fm.endTime" lable="开始时间"></datetime-picker-popup>
-        <van-cell title="活动领队" is-link></van-cell>
+        <datetime-picker-popup v-model="fm.endTime" lable="结束时间"></datetime-picker-popup>
+        <datetime-picker-popup v-model="fm.closeTime" lable="报名截止"></datetime-picker-popup>
         </van-cell-group>
-        <van-cell-group>
+        <van-cell-group title="报名信息配置">
             <van-field
                 center
                 clearable
                 label="活动费用"
+                v-model="fm.cost"
+                :disabled="fm.isFree"
                 placeholder="请输入">
-                <span slot="button">元</span>
+                <template slot="button">
+                    <van-checkbox
+                      v-model="fm.isFree"
+                      shape="square"
+                      @change="handleFreeChange">免费</van-checkbox>
+                </template>
             </van-field>
-            <van-cell title="活动保险" is-link></van-cell>
+            <action-sheet
+              v-model="fm.insuranceType"
+              label="活动保险"
+              :data="insuranceActions">
+            </action-sheet>
+
         </van-cell-group>
         <van-cell-group>
-            <van-cell title="报名审核" is-link></van-cell>
-            <van-cell title="允许代挂" is-link></van-cell>
+            <van-field name="switch" readonly label="报名审核">
+                <template #button>
+                    <van-switch v-model="fm.check" size="20" />
+                </template>
+            </van-field>
+            <van-field name="switch" readonly label="允许代挂">
+                <template #button>
+                    <van-switch v-model="fm.add" size="20" />
+                </template>
+            </van-field>
         </van-cell-group>
         <van-cell-group>
             <van-field
@@ -67,7 +85,11 @@
                 placeholder="请输入">
             </van-field>
         </van-cell-group>
-
+        <van-cell>
+            <van-checkbox v-model="vm.isAgree">
+                <span>我已阅读并同意《<a href="#">瀚游FM服务协议</a>》</span>
+            </van-checkbox>
+        </van-cell>
         <van-row class="mr">
             <van-col span="10" offset="1">
                 <van-button type="default" plain size="large">存草稿</van-button>
@@ -76,46 +98,17 @@
                 <van-button type="info" size="large" @click="handlePublish">发布</van-button>
             </van-col>
         </van-row>
-
-        <!--<van-number-keyboard-->
-            <!--v-model="fm.num"-->
-            <!--:show="vm.show"-->
-            <!--extra-key="."-->
-            <!--close-button-text="完成"-->
-            <!--@blur="vm.show = false"-->
-            <!--@touchstart.native.stop="show = true"-->
-        <!--/>-->
-        <!--<van-cell title="注册角色" is-link :value="fm.role" @click="handleShowRoleList" required></van-cell>-->
-        <!--<van-cell title="所在城市" is-link v-model="fm.city" @click="handleShowAreaPopup"></van-cell>-->
-        <!--<van-action-sheet-->
-            <!--v-model="vm.role"-->
-            <!--:actions="vm.roleList"-->
-            <!--:close-on-click-action="true"-->
-            <!--@select="handleRoleSelect">-->
-        <!--</van-action-sheet>-->
-        <!-- 所在城市 开始 -->
-        <!--<datetime-picker-popup v-model="test" @confirm="handleSelectStartTime"></datetime-picker-popup>-->
-        <!--<van-popup-->
-            <!--v-model="vm.datePopupVisiable"-->
-            <!--position="bottom"-->
-        <!--&gt;-->
-            <!--<van-datetime-picker-->
-                <!--type="datetime"-->
-                <!--@confirm="handleSelectStartTime"-->
-                <!--title="活动开始时间"-->
-                <!--:close-on-popstate="true"-->
-            <!--/>-->
-        <!--</van-popup>-->
-        <!-- 所在城市 结束 -->
     </div>
 </template>
 
 <script>
-    import datetimePickerPopup from '../../components/datetimePickerPopup';
+    import datetimePickerPopup from '../../components/HYDatetimePicker';
+    import actionSheet from '../../components/HYActionSheet';
 	export default {
 		name: "PublishActivity",
         components: {
             datetimePickerPopup,
+            actionSheet,
         },
         data() {
             return {
@@ -127,11 +120,26 @@
                     num: '',
                     startTime: null,
                     notice: '',
+                    insurance: false,
                 },
                 vm: {
                     show: false,
                     datePopupVisiable: false,
-                }
+                },
+                insuranceActions: [
+                    {
+                        name: '无保险要求',
+                        value: 1,
+                    },
+                    {
+                        name: '会员自行购买',
+                        value: 2,
+                    },
+                    {
+                        name: '主办方统一购买',
+                        value: 3,
+                    },
+                ]
             }
         },
         methods: {
@@ -156,6 +164,20 @@
                 this.$router.push({
                     name: 'userCenter'
                 })
+            },
+            handleFreeChange(val) {
+                // 免费的时候将费用设置为0
+                if (val) {
+                    this.fm.cost = 0;
+                }
+            },
+            handleInsuranceSelect(item, index) {
+                console.log(item);
+                console.log(index);
+                this.fm.insuranceType = item.name;
+                this.fm.insurance = false;
+            },
+            handleInsuranceCancel() {
             },
         }
 	}

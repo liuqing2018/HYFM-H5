@@ -1,22 +1,26 @@
 <template>
   <div>
-    <van-cell :title="lable"
-          is-link
-          v-model="value"
-          @click="handleShowDatePopup">
+    <van-field
+      readonly
+      clickable
+      v-model="value"
+      :label="lable"
+      @click="handleShowDatePopup"
+      placeholder="点击选择时间">
       <van-icon
         slot="right-icon"
+        class="right-icon-time"
         name="underway-o"
-        style="line-height: inherit;"
       />
-    </van-cell>
+    </van-field>
     <van-popup
       v-model="popupVisiable"
       position="bottom"
     >
       <van-datetime-picker
         type="datetime"
-        @confirm="confirm"
+        @confirm="handleConfirm"
+        @cancel="handleCancel"
         :title="title"
         :close-on-popstate="true"
       />
@@ -53,17 +57,23 @@
 			handleShowDatePopup() {
 				this.popupVisiable = true;
 			},
-			confirm(value) {
+			handleConfirm(value) {
 				const fmtDate = utils.formatTime(value);
 				this.popupVisiable = false;
 				this.$emit('input', fmtDate);
 				this.$emit('confirm', value);
 			},
+			handleCancel() {
+				this.popupVisiable = false;
+      },
 		},
 		created() {}
 	}
 </script>
 
 <style scoped>
-
+  .right-icon-time {
+    padding: 0 2px;
+    line-height: inherit;
+  }
 </style>
