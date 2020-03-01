@@ -3,7 +3,7 @@
         <div class="user-info">
             <div class="logo">
                 <img src="../../assets/bg.jpg" alt="">
-                <h3>瀚游户外</h3>
+                <h3 class="color-fff">瀚游户外</h3>
             </div>
             <div class="focus">
                 <span>ID: 123456</span>

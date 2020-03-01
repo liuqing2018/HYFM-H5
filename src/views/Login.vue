@@ -11,7 +11,7 @@
 				left-icon="contact"
 				placeholder="请输入用户名"
 			/>
-			
+
 			<van-field
 				v-model="fm.password"
 				type="password"
@@ -19,7 +19,7 @@
 				left-icon="comment-o"
 				placeholder="请输入密码"
 			/>
-			
+
 			<van-field
 				v-model="fm.sms"
 				center
@@ -30,9 +30,9 @@
 			>
 				<van-button slot="button" size="small" type="primary">发送验证码</van-button>
 			</van-field>
-            
+
             <van-cell>
-                <van-button type="info" size="large">登录</van-button>
+                <van-button type="info" size="large" @click="handleToLogin">登录</van-button>
             </van-cell>
             <van-cell>
                 <div class="other">
@@ -62,7 +62,12 @@
                 this.$router.push({
                     name: 'signUp'
                 })
-            }
+            },
+						handleToLogin() {
+							this.$router.push({
+								name: 'userCenter',
+							})
+						},
         }
     }
 </script>
@@ -70,7 +75,7 @@
 <style scoped>
     .login {
         padding: 10px 20px;
-        
+
     }
 	.logo {
 		text-align: center;
