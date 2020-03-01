@@ -8,6 +8,12 @@
                 label="活动标题"
                 placeholder="请输入用户名">
             </van-field>
+            <van-field name="tag" label="活动标签">
+                <template #input>
+                    <van-tag class="" plain type="primary">徒步</van-tag>
+                    <van-tag plain type="primary">网红打卡</van-tag>
+                </template>
+            </van-field>
             <van-field
                 v-model="fm.detail"
                 rows="4"

@@ -5,7 +5,7 @@
 </template>
 
 <script>
-  
+
   export default {
     name: 'hy-app',
     components: {}
@@ -22,4 +22,7 @@
     /*margin-top: 60px;*/
       background: #ffffff;
   }
+</style>
+<style lang="less">
+  @import "./style/style";
 </style>
