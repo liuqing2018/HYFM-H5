@@ -27,6 +27,14 @@ export default [
                     menuTitle: '发布活动',
                 },
             },
+            {
+                path: 'activityInfo',
+                name: 'activityInfo',
+                component: resolve => require(['../views/activity/ActivityInfo.vue'], resolve),
+                meta: {
+                    menuTitle: '活动详情',
+                },
+            },
         ],
     },
 ];

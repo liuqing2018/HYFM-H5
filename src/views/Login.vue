@@ -65,7 +65,7 @@
             },
 						handleToLogin() {
 							this.$router.push({
-								name: 'userCenter',
+								name: 'activityInfo',
 							})
 						},
         }
