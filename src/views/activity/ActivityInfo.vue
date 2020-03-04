@@ -66,12 +66,12 @@
             <van-cell v-for="item in 20" :key="item" :title="item"></van-cell>
           </van-list>
         </van-tab>
-        <van-tab title="注意事项">注意事项</van-tab>
+        <van-tab title="注意事项"></van-tab>
       </van-tabs>
 
       <van-goods-action>
         <van-goods-action-icon>
-          <p style="width: 100px;"> ¥30</p>
+          <p style="width: 100px; font-size: 24px;"> ¥30</p>
         </van-goods-action-icon>
         <van-goods-action-button type="danger" text="立即报名" @click="handleToJoin" />
       </van-goods-action>
@@ -110,6 +110,11 @@
           forbidClick: true,
           loadingType: 'spinner'
         });
+        setTimeout(() => {
+          this.$router.push({
+            name: 'joinActivity',
+          }, 1000);
+        })
       }
 		},
     created() {

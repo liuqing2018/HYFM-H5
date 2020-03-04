@@ -35,6 +35,14 @@ export default [
                     menuTitle: '活动详情',
                 },
             },
+            {
+                path: 'joinActivity',
+                name: 'joinActivity',
+                component: resolve => require(['../views/activity/JoinActivity.vue'], resolve),
+                meta: {
+                    menuTitle: '报名活动',
+                },
+            },
         ],
     },
 ];

@@ -22,6 +22,7 @@
             desc="吃货跑团..."
             title="吃货跑团长距离之42公里约跑（74）"
             :thumb="thumb"
+            @click="handleToInfo"
           >
             <div slot="tags">
               <van-tag class="mr-10" plain type="primary">吃货</van-tag>
@@ -87,7 +88,12 @@
 				this.$router.push({
 					name: 'publicActivity',
 				})
-			}
+			},
+      handleToInfo() {
+        this.$router.push({
+          name: 'activityInfo',
+        })
+      }
 		}
 	}
 </script>
