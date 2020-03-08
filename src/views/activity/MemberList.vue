@@ -51,6 +51,7 @@
 </template>
 
 <script>
+  import { mapMutations } from 'vuex';
   // import hyHeaderNavbar from '../../components/HYHeaderNavbar';
 
 	export default {
@@ -69,7 +70,11 @@
         selectedList: [2],
 			}
 		},
+    computed: {},
 		methods: {
+      ...mapMutations({
+        setMemberList: 'setMemberList',
+      }),
       onSearch() {
         this.$toast.loading({
           message: '加载中...',
@@ -102,6 +107,7 @@
         }, 1000);
       },
       handleActionOk() {
+        this.setMemberList(this.selectedList);
         this.$router.push({
           name: 'joinActivity',
         })

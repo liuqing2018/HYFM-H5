@@ -7,7 +7,7 @@
 <script>
 
   export default {
-    name: 'hy-app',
+    name: 'HYFM',
     components: {}
   }
 </script>

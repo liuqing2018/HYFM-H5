@@ -3,18 +3,18 @@
     <van-cell-group>
       <van-cell>
         <template #title>
-          <h3 class="activity-title">靠谱头灯团购：户外活动必备光源（30元一个）</h3>
+          <h3 class="activity-title">{{vm.name}}</h3>
         </template>
         <template #label>
           <div class="sub-title-wrap">
-            <p class="sub-title">活动时间：2020-03-03 21:51:00-2020-03-03 21:51:00</p>
+            <p class="sub-title">活动时间：{{vm.startTime}}-{{vm.endTime}}</p>
           </div>
         </template>
       </van-cell>
     </van-cell-group>
     <van-cell-group>
       <div class="sub-title-wrap" slot="title">
-        <div>报名人（3人）</div>
+        <div>报名人（左滑可编辑）</div>
         <div>
           <van-button
             plain
@@ -26,7 +26,7 @@
         </div>
 
       </div>
-      <van-swipe-cell v-for="item in 2" :key="item">
+      <van-swipe-cell v-for="(item, index) in memberList" :key="item">
         <van-cell>
           <template #title>
             <p class="activity-title">张三-15011557228</p>
@@ -41,7 +41,7 @@
           </template>
         </van-cell>
         <div slot="right" class="y-inner">
-          <van-button class="y-inner" square type="danger" text="删除"  style="height: 100%"/>
+          <van-button class="y-inner" square type="danger" style="height: 100%" @click="handleDeleteMember(index)">删除</van-button>
           <van-button class="y-inner" square type="primary" text="编辑" style=" height: 100%"/>
         </div>
       </van-swipe-cell>
@@ -56,7 +56,7 @@
       <van-cell title='' value="实际应付：￥354"></van-cell>
     </van-cell-group>
 
-    <van-radio-group v-model="payType">
+    <van-radio-group v-model="vm.payType">
       <van-cell-group title="支付方式">
         <van-cell>
           <van-radio name="3">
@@ -96,6 +96,7 @@
 </template>
 
 <script>
+  import { mapState, mapMutations, mapActions } from 'vuex';
   // import hyHeaderNavbar from '../../components/HYHeaderNavbar';
 	import thumb from '../../assets/bg.jpg';
   import ali from '../../assets/ali.png';
@@ -109,20 +110,22 @@
 			return {
         thumb,
         ali,
-				vm: {
-					name: '',
-					detail: '',
-					num: '',
-          cost: 30,
-					startTime: '2020-03-03 21:51:00',
-          endTime: '2020-03-30 21:51:00',
-					notice: '',
-					insurance: false,
-				},
-        payType: '1'
 			}
 		},
+    computed: {
+      ...mapState({
+        vm: state => state.activity.vm,
+        memberList: state => state.activity.memberList,
+      }),
+    },
 		methods: {
+      ...mapMutations({
+        setViewModel: 'setViewModel',
+        deleteMember: 'deleteMember',
+      }),
+      ...mapActions([
+        'getActivityInfo',
+      ]),
       handleToJoin() {
         this.$toast.loading({
           message: '加载中...',
@@ -141,10 +144,14 @@
         this.$router.push({
           name: 'memberList',
         })
+      },
+      // 删除活动参与人员
+      handleDeleteMember(index) {
+        this.deleteMember(index);
       }
 		},
     created() {
-      document.title = '我是一个标题';
+      this.getActivityInfo()
     }
   }
 </script>
