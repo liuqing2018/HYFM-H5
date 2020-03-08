@@ -12,7 +12,20 @@
         </template>
       </van-cell>
     </van-cell-group>
-    <van-cell-group title="报名成员">
+    <van-cell-group>
+      <div class="sub-title-wrap" slot="title">
+        <div>报名人（3人）</div>
+        <div>
+          <van-button
+            plain
+            hairline
+            icon="plus"
+            size="small"
+            type="info"
+            @click="handleAddMember">添加 </van-button>
+        </div>
+
+      </div>
       <van-swipe-cell v-for="item in 2" :key="item">
         <van-cell>
           <template #title>
@@ -123,6 +136,12 @@
           }, 1000);
         })
       },
+      // 增加活动参与人员
+      handleAddMember() {
+        this.$router.push({
+          name: 'memberList',
+        })
+      }
 		},
     created() {
       document.title = '我是一个标题';

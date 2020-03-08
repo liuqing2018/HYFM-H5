@@ -43,6 +43,14 @@ export default [
                     menuTitle: '报名活动',
                 },
             },
+            {
+                path: 'memberList',
+                name: 'memberList',
+                component: resolve => require(['../views/activity/MemberList.vue'], resolve),
+                meta: {
+                    menuTitle: '活动参与人',
+                },
+            },
         ],
     },
 ];
